@@ -1,0 +1,24 @@
+# Use official Python image
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy backend code
+COPY backend/ ./backend/
+
+# Install dependencies
+RUN pip install --upgrade pip
+RUN pip install -r backend/requirements.txt
+
+# Copy the rest of the app if needed
+COPY . .
+
+# Set environment variable for Flask (optional)
+ENV FLASK_APP=backend/app.py
+
+# Expose port (Railway expects 8080 or the PORT env variable)
+EXPOSE 5000
+
+# Command to run the app
+CMD ["python", "backend/app.py"]
